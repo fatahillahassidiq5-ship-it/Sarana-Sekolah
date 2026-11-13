@@ -37,7 +37,6 @@ namespace Sarana_Sekolah
             this.BackColor = Color.FromArgb(250, 250, 250);
             this.Padding = new Padding(30, 20, 30, 20);
 
-            // ---- title ----
             var pnlTop = new Panel { Dock = DockStyle.Fill };
             pnlTop.Controls.Add(new Label
             {
@@ -54,7 +53,6 @@ namespace Sarana_Sekolah
                 Location = new Point(0, 25)
             });
 
-            // ---- fields ----
             var table = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
@@ -103,7 +101,6 @@ namespace Sarana_Sekolah
             table.Controls.Add(txtDesc, 0, 3);
             table.SetColumnSpan(txtDesc, 2);
 
-            // ---- buttons ----
             var pnlButtons = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill,
@@ -151,7 +148,6 @@ namespace Sarana_Sekolah
             pnlButtons.Controls.Add(btnAnother);
             pnlButtons.Controls.Add(btnCancel);
 
-            // ---- put it together ----
             var root = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
@@ -215,7 +211,6 @@ namespace Sarana_Sekolah
                 using (var conn = new MySqlConnection(Db.koneksijaringan))
                 {
                     conn.Open();
-                    // like CreateAspiration.php: user_id = logged-in user, status = Menunggu
                     var cmd = new MySqlCommand(
                         @"INSERT INTO aspirations
                             (user_id, category_id, location, description, status, created_at, updated_at)

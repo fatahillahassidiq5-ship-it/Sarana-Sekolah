@@ -27,7 +27,6 @@ namespace Sarana_Sekolah
             this.BackColor = Color.FromArgb(250, 250, 250);
             this.Padding = new Padding(30, 20, 30, 20);
 
-            // ---- top: breadcrumb, title, New User button ----
             var pnlTop = new Panel { Dock = DockStyle.Top, Height = 90 };
 
             var lblCrumb = new Label
@@ -61,7 +60,6 @@ namespace Sarana_Sekolah
             pnlTop.Controls.Add(lblTitle);
             pnlTop.Controls.Add(btnNew);
 
-            // ---- search bar ----
             var pnlSearch = new Panel { Dock = DockStyle.Top, Height = 60 };
             txtSearch = new Guna2TextBox
             {
@@ -73,7 +71,6 @@ namespace Sarana_Sekolah
             txtSearch.TextChanged += (s, e) => LoadData(txtSearch.Text.Trim());
             pnlSearch.Controls.Add(txtSearch);
 
-            // ---- table ----
             grid = new DataGridView
             {
                 Dock = DockStyle.Fill,
@@ -112,7 +109,6 @@ namespace Sarana_Sekolah
             });
             grid.CellContentClick += Grid_CellContentClick;
 
-            // order matters: Fill control first, then the Top ones
             this.Controls.Add(grid);
             this.Controls.Add(pnlSearch);
             this.Controls.Add(pnlTop);

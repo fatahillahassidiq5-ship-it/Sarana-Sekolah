@@ -16,10 +16,10 @@ namespace Sarana_Sekolah
             this.Load += Menu_Siswa_Load;
             btnHomepage.Click += (s, e) => ShowHome();
             btnAspirations.Click += (s, e) => ShowAspirations();
-            btnKeluar.Click += (s, e) =>              // the Keluar button
+            btnKeluar.Click += (s, e) =>            
             {
                 Sesssion.CurrentUser = null;
-                this.Close();                          // login form shows again
+                this.Close();                        
             };
         }
 
