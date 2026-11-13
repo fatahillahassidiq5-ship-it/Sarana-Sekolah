@@ -15,7 +15,6 @@ namespace Sarana_Sekolah
             this.Height = 130;
             this.BackColor = Color.White;
 
-            // three equal columns, one card each
             var table = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
@@ -36,14 +35,13 @@ namespace Sarana_Sekolah
             Reload();
         }
 
-        // builds one card (title + big number) and returns the number label
         private Label AddCard(TableLayoutPanel table, string title, int column)
         {
             var card = new Guna2Panel
             {
                 Dock = DockStyle.Fill,
                 BorderRadius = 10,
-                FillColor = Color.FromArgb(221, 221, 221),   // same gray as your other cards
+                FillColor = Color.FromArgb(221, 221, 221),   
                 Margin = new Padding(0, 0, 15, 0)
             };
 
@@ -72,7 +70,6 @@ namespace Sarana_Sekolah
             return lblValue;
         }
 
-        // like Aspiration::where('status', ...)->count()
         public void Reload()
         {
             int menunggu = 0, proses = 0, selesai = 0;

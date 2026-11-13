@@ -68,7 +68,7 @@ namespace Sarana_Sekolah
         private void ShowUserForm(int? id)
         {
             var form = new ucUserForm(id);
-            form.Finished += ShowUsers;      // after save/cancel, go back to the list
+            form.Finished += ShowUsers;      
             ShowPage(form);
         }
         public Menu_Admin()
@@ -102,11 +102,10 @@ namespace Sarana_Sekolah
             label3.Text = initial;
             label4.Text = initial;
 
-            // dashboard stats (Menunggu / Proses / Selesai)
             stats = new ucDashboardStats();
-            stats.Left = guna2Panel1.Left;                                       // line up with the cards
-            stats.Top = Math.Max(guna2Panel1.Bottom, guna2Panel2.Bottom) + 25;   // below the two cards
-            stats.Width = guna2Panel2.Right - guna2Panel1.Left;                  // as wide as both cards
+            stats.Left = guna2Panel1.Left;                                     
+            stats.Top = Math.Max(guna2Panel1.Bottom, guna2Panel2.Bottom) + 25;  
+            stats.Width = guna2Panel2.Right - guna2Panel1.Left;                  
             pnlHome.Controls.Add(stats);
 
             ShowHome();

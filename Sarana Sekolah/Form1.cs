@@ -108,7 +108,6 @@ namespace Sarana_Sekolah
 
                             string stored = rd["password"].ToString();
 
-                            // hashed password (from the Create User form) or old plain text
                             bool ok = stored.StartsWith("$2")
                                 ? BCrypt.Net.BCrypt.Verify(password, stored)
                                 : password == stored;

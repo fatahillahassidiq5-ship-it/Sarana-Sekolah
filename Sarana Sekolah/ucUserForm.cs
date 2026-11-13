@@ -10,7 +10,7 @@ namespace Sarana_Sekolah
     {
         public event Action Finished;
 
-        private readonly int? _id;          // null = create, number = edit
+        private readonly int? _id;          
         private Guna2TextBox txtName, txtEmail, txtNis, txtKelas, txtPassword;
         private Guna2ComboBox cmbRole;
         private TableLayoutPanel table;
@@ -31,7 +31,6 @@ namespace Sarana_Sekolah
 
             bool isEdit = _id.HasValue;
 
-            // ---- title ----
             var pnlTop = new Panel { Dock = DockStyle.Top, Height = 90 };
             pnlTop.Controls.Add(new Label
             {
@@ -48,7 +47,7 @@ namespace Sarana_Sekolah
                 Location = new Point(0, 25)
             });
 
-            // ---- fields (2 columns) ----
+            
             table = new TableLayoutPanel
             {
                 Dock = DockStyle.Top,
@@ -60,8 +59,8 @@ namespace Sarana_Sekolah
             table.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
             for (int i = 0; i < 3; i++)
             {
-                table.RowStyles.Add(new RowStyle(SizeType.Absolute, 28)); // label row
-                table.RowStyles.Add(new RowStyle(SizeType.Absolute, 50)); // input row
+                table.RowStyles.Add(new RowStyle(SizeType.Absolute, 28));
+                table.RowStyles.Add(new RowStyle(SizeType.Absolute, 50));
             }
 
             txtName = NewText("");
@@ -140,8 +139,6 @@ namespace Sarana_Sekolah
             btnCancel.Click += (s, e) => Finished?.Invoke();
             pnlButtons.Controls.Add(btnCancel);
 
-            // Top-docked controls: the LAST added is placed at the very top,
-            // so add them bottom-to-top.
             this.Controls.Add(pnlButtons);
             this.Controls.Add(table);
             this.Controls.Add(pnlTop);

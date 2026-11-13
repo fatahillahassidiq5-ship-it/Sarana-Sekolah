@@ -20,7 +20,6 @@ namespace Sarana_Sekolah
         private Guna2TextBox txtNis;
         private DataGridView grid;
 
-        // nilai filter yang sedang aktif (dipakai setelah klik Apply filters)
         private int fCat = 0;
         private bool fUseDate = false;
         private DateTime fDate = DateTime.Today;
@@ -35,13 +34,11 @@ namespace Sarana_Sekolah
             LoadData();
         }
 
-        // ================= TAMPILAN =================
         private void BuildUi()
         {
             this.BackColor = Color.FromArgb(250, 250, 250);
             this.Padding = new Padding(30, 20, 30, 20);
 
-            // ---- judul + tombol New aspiration ----
             var pnlTop = new Panel { Dock = DockStyle.Fill };
             pnlTop.Controls.Add(new Label
             {
@@ -71,7 +68,6 @@ namespace Sarana_Sekolah
             btnNew.Click += (s, e) => NewAspirationClicked?.Invoke();
             pnlTop.Controls.Add(btnNew);
 
-            // ---- toolbar: Search + Filters (rata kanan) ----
             var pnlTool = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill,
@@ -100,10 +96,9 @@ namespace Sarana_Sekolah
             };
             txtSearch.TextChanged += (s, e) => LoadData();
 
-            pnlTool.Controls.Add(btnFilter);   // yang pertama ada di paling kanan
+            pnlTool.Controls.Add(btnFilter);   
             pnlTool.Controls.Add(txtSearch);
 
-            // ---- panel filter (disembunyikan dulu) ----
             pnlFilter = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill,
@@ -123,7 +118,7 @@ namespace Sarana_Sekolah
             dtpTanggal = new DateTimePicker
             {
                 Format = DateTimePickerFormat.Short,
-                ShowCheckBox = true,      // tidak dicentang = tidak memfilter tanggal
+                ShowCheckBox = true,      
                 Checked = false,
                 Font = new Font("Segoe UI", 10)
             };
@@ -140,7 +135,7 @@ namespace Sarana_Sekolah
                 "All", "Januari", "Februari", "Maret", "April", "Mei", "Juni",
                 "Juli", "Agustus", "September", "Oktober", "November", "Desember"
             });
-            cmbBulan.SelectedIndex = 0;     // index = nomor bulan (0 = semua)
+            cmbBulan.SelectedIndex = 0;     
 
             txtNis = new Guna2TextBox
             {
@@ -185,7 +180,6 @@ namespace Sarana_Sekolah
             pnlButtons.Controls.Add(btnReset);
             pnlFilter.Controls.Add(pnlButtons);
 
-            // ---- tabel ----
             grid = new DataGridView
             {
                 Dock = DockStyle.Fill,
@@ -224,7 +218,6 @@ namespace Sarana_Sekolah
                 DefaultCellStyle = { Format = "MMM dd, yyyy HH:mm:ss" }
             });
 
-            // tombol Tanggapi hanya untuk admin
             if (Sesssion.IsAdmin())
             {
                 grid.Columns.Add(new DataGridViewButtonColumn
@@ -240,7 +233,6 @@ namespace Sarana_Sekolah
             grid.CellFormatting += Grid_CellFormatting;
             grid.CellContentClick += Grid_CellContentClick;
 
-            // ---- susun semuanya ----
             layout = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
@@ -248,10 +240,10 @@ namespace Sarana_Sekolah
                 RowCount = 4
             };
             layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
-            layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 90));    // judul
-            layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 60));    // search + Filters
-            layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 0));     // panel filter (tutup)
-            layout.RowStyles.Add(new RowStyle(SizeType.Percent, 100));    // tabel
+            layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 90));    
+            layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 60));    
+            layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 0));     
+            layout.RowStyles.Add(new RowStyle(SizeType.Percent, 100));    
             layout.Controls.Add(pnlTop, 0, 0);
             layout.Controls.Add(pnlTool, 0, 1);
             layout.Controls.Add(pnlFilter, 0, 2);
@@ -282,7 +274,6 @@ namespace Sarana_Sekolah
             layout.RowStyles[2].Height = show ? 100 : 0;
         }
 
-        // ================= FILTER =================
         private void ApplyFilters()
         {
             fCat = cmbKategori.SelectedIndex > 0 ? Convert.ToInt32(cmbKategori.SelectedValue) : 0;
@@ -317,7 +308,6 @@ namespace Sarana_Sekolah
                     var dt = new DataTable();
                     new MySqlDataAdapter("SELECT id, name FROM categories ORDER BY name", conn).Fill(dt);
 
-                    // baris pertama "All" (id 0 = tanpa filter)
                     var all = dt.NewRow();
                     all["id"] = 0;
                     all["name"] = "All";
@@ -335,7 +325,6 @@ namespace Sarana_Sekolah
             }
         }
 
-        // ================= DATA =================
         private void LoadData()
         {
             try
@@ -386,7 +375,6 @@ namespace Sarana_Sekolah
             }
         }
 
-        // warna badge status: Menunggu = kuning, Proses = biru, lainnya = hijau
         private void Grid_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             if (e.RowIndex < 0 || e.Value == null) return;
@@ -410,7 +398,6 @@ namespace Sarana_Sekolah
             }
         }
 
-        // ================= TANGGAPI (admin) =================
         private void Grid_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
@@ -419,7 +406,6 @@ namespace Sarana_Sekolah
 
             int id = Convert.ToInt32(grid.Rows[e.RowIndex].Cells["id"].Value);
 
-            // ambil status dan umpan balik penuh (di tabel umpan balik dipotong 30 huruf)
             string status = "Menunggu";
             string feedback = "";
             try
